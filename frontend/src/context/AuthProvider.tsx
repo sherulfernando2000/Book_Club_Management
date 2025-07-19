@@ -23,15 +23,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setHeader(accessToken)
     }, [accessToken])
 
+    //This is what allows the user to stay logged in even after a page reload.
     useEffect(() => {
         const tryRefresh = async () => {
             try {
                 const result = await apiClient.post("/auth/refresh-token")
+                console.log(result)
                 setAccessToken(result.data.accessToken)
                 setIsLoggedIn(true)
 
                 const currentPath = window.location.pathname
-                if (currentPath === "/login" || currentPath === "/signup" || currentPath === "/") {
+                console.log(`current path ${currentPath}`)
+                if (currentPath === "/login" || currentPath === "/signup" || currentPath === "/dashboard/readers") {
                     console.log("currentPath", currentPath)
                     router.navigate("/dashboard")
                 }

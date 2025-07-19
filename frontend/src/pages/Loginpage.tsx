@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { login } from "../services/authService";
 import { useAuth } from "../context/useAuth";
-// import { useAuth } from "../context/useAuth";
+
 
 interface FormData {
   email: string;
@@ -73,7 +73,9 @@ const Loginpage = () => {
       setIsLoading(true);
       try {
          const user = await login(formData);
-        toast.success(`Welcome, ${user.name}!`);
+        toast.success(`Welcome, ${user.user.name}!`);
+        console.log(`Welcome, ${user.name}!`)
+        console.log(user.user.name)
         authenticate(user.accessToken);
         navigate("/dashboard");
       } catch (error) {

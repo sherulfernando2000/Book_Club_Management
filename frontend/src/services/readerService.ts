@@ -1,5 +1,5 @@
 import type { Reader } from "../types/Reader"
-import apiClient from "./apiclient"
+import apiClient from "./apiClient"
 
 
 export const getAllReaders = async (): Promise<Reader[]> => {

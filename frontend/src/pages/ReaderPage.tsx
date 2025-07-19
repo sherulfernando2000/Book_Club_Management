@@ -6,6 +6,7 @@ import ReaderForm from "../components/forms/ReaderForm";
 import { addReader, deleteReader, getAllReaders, updateReader } from "../services/readerService";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useAuth } from "../context/useAuth";
 
 const ReadersPage = () => {
   // States for readers list and search
@@ -37,6 +38,7 @@ const ReadersPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [currentReader, setCurrentReader] = useState<Reader | null>(null);
   const [isReaderLoading, setIsReaderLoading] = useState(false)
+  const { isAuthenticating, isLoggedIn } = useAuth()
 
   const fetchAllReaders = async() => {
     try {
@@ -55,8 +57,11 @@ const ReadersPage = () => {
   }
 
   useEffect(()=>{
-    fetchAllReaders()
+    if (!isAuthenticating && isLoggedIn) {
+    fetchAllReaders();
+  }
   }, [])
+
 
   const handleAddReader = () => {
     setCurrentReader(null);
