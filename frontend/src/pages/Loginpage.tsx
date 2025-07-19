@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 // import { login } from "../services/authService";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { login } from "../services/authService";
+import { useAuth } from "../context/useAuth";
 // import { useAuth } from "../context/useAuth";
 
 interface FormData {
@@ -27,11 +29,11 @@ const Loginpage = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  // const { login: authenticate } = useAuth();
+  const { login: authenticate } = useAuth();
 
   // Replace these with your actual image URLs
   const backgroundImageUrl = "your-background-image-url";
-  const logo = "your-logo-url";
+  // const logo = "your-logo-url";
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -70,13 +72,14 @@ const Loginpage = () => {
     if (validateForm()) {
       setIsLoading(true);
       try {
-        // const user = await login(formData);
-        // toast.success(`Welcome, ${user.name}!`);
-        // authenticate(user.accessToken);
+         const user = await login(formData);
+        toast.success(`Welcome, ${user.name}!`);
+        authenticate(user.accessToken);
         navigate("/dashboard");
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          toast.error(error.message);
+          const errorMsg = error.response?.data?.message || "Login failed";
+          toast.error(errorMsg);
         } else {
           toast.error("Something went wrong");
         }

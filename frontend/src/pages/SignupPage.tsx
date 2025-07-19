@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { signup } from "../services/authService";
+import { signUp } from "../services/authService";
 
 interface FormData {
   fullName: string;
@@ -38,7 +38,7 @@ const SignupPage = () => {
 
   // Replace these with your actual image URLs
   const backgroundImageUrl = "your-background-image-url";
-  const logo = "your-logo-url";
+  // const logo = "your-logo-url";
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -91,13 +91,14 @@ const SignupPage = () => {
         // Replace with your actual signup API call
         // const response = await axios.post('/api/signup', formData);
         // toast.success('Account created successfully!');
-        const response = await signup({
+        const response = await signUp({
             name: formData.fullName,
             email: formData.email,
             password: formData.password,
           });
         toast.success('Account created successfully!');
-        localStorage.setItem('token', response.token);
+        // localStorage.setItem('token', response.token);
+        console.log(response.name)
         navigate("/login");
       } catch (error) {
         if (axios.isAxiosError(error)) {
