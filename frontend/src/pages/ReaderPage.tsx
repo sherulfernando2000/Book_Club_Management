@@ -3,7 +3,12 @@ import { Search, User } from "lucide-react";
 import type { Reader } from "../types/Reader";
 import ReaderTable from "../components/tables/ReaderTable";
 import ReaderForm from "../components/forms/ReaderForm";
-import { addReader, deleteReader, getAllReaders, updateReader } from "../services/readerService";
+import {
+  addReader,
+  deleteReader,
+  getAllReaders,
+  updateReader,
+} from "../services/readerService";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useAuth } from "../context/useAuth";
@@ -37,31 +42,30 @@ const ReadersPage = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [currentReader, setCurrentReader] = useState<Reader | null>(null);
-  const [isReaderLoading, setIsReaderLoading] = useState(false)
-  const { isAuthenticating, isLoggedIn } = useAuth()
+  const [isReaderLoading, setIsReaderLoading] = useState(false);
+  const { isAuthenticating, isLoggedIn } = useAuth();
 
-  const fetchAllReaders = async() => {
+  const fetchAllReaders = async () => {
     try {
-       setIsReaderLoading(true) 
-       const result = await getAllReaders();
-       setReaders(result)
+      setIsReaderLoading(true);
+      const result = await getAllReaders();
+      setReaders(result);
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            toast.error(error.message)
-          } else {
-            toast.error("Something went wrong")
-          }
-    } finally{
-        setIsReaderLoading(false)
+      if (axios.isAxiosError(error)) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } finally {
+      setIsReaderLoading(false);
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!isAuthenticating && isLoggedIn) {
-    fetchAllReaders();
-  }
-  }, [])
-
+      fetchAllReaders();
+    }
+  }, []);
 
   const handleAddReader = () => {
     setCurrentReader(null);
@@ -81,21 +85,21 @@ const ReadersPage = () => {
     }
   };
 
-  const handleDeleteReader = async(id: string) => {
+  const handleDeleteReader = async (id: string) => {
     if (window.confirm("Are you sure you want to delete this reader?")) {
-        try {
-            await deleteReader(id)
-            fetchAllReaders()
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                toast.error(error.message)
-              } else {
-                toast.error("Something went wrong")
-              }
-        }finally{
-            
+      try {
+        await deleteReader(id);
+        fetchAllReaders();
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          toast.error(error.message);
+        } else {
+          toast.error("Something went wrong");
         }
-        
+      } finally {
+        //
+      }
+
       //setReaders(readers.filter((reader) => reader.readerId !== id));
     }
   };
@@ -127,21 +131,18 @@ const ReadersPage = () => {
             toast.error("Something went wrong");
           }
         }
-
-    
       } else {
         // Add new reader
         try {
-            const newReader = await addReader(readerData)
-            setReaders((prev)=>[...prev,newReader])
+          const newReader = await addReader(readerData);
+          setReaders((prev) => [...prev, newReader]);
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                toast.error(error.message)
-              } else {
-                toast.error("Something went wrong")
-              }
+          if (axios.isAxiosError(error)) {
+            toast.error(error.message);
+          } else {
+            toast.error("Something went wrong");
+          }
         }
-        
       }
 
       setIsSaving(false);
@@ -157,8 +158,9 @@ const ReadersPage = () => {
       </h1>
 
       {/* Search bar and button to Add reader */}
-      <div className="flex justify-between items-end mb-4 flex-wrap gap-4">
-        <div className="flex flex-col w-full sm:w-2/3">
+      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-end mb-4 gap-4">
+        {/* Search Input */}
+        <div className="flex-1">
           <label htmlFor="search" className="text-black font-medium mb-1">
             Search
           </label>
@@ -174,9 +176,10 @@ const ReadersPage = () => {
           </div>
         </div>
 
+        {/* Add Button */}
         <button
           onClick={handleAddReader}
-          className="bg-green-500 text-white px-4 py-2 rounded h-fit"
+          className="bg-green-500 text-white px-4 py-2 rounded w-full sm:w-auto"
         >
           Add Reader
         </button>
@@ -185,23 +188,29 @@ const ReadersPage = () => {
       <div className="border-b-2 black"></div>
 
       {/* Readers Table */}
-      <ReaderTable
-        readers={readers}
-        search={search}
-        onView={handleViewReader}
-        onDelete={handleDeleteReader}
-      />
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-sm text-left">
+          <ReaderTable
+            readers={readers}
+            search={search}
+            onView={handleViewReader}
+            onDelete={handleDeleteReader}
+          />
+        </table>
+      </div>
 
       {/* Reader Form Popup */}
       {showPopup && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-[1000] p-4">
-          <ReaderForm
-            reader={currentReader}
-            isEditing={!!currentReader}
-            onSave={handleSaveReader}
-            onClose={handleClosePopup}
-            isSaving={isSaving}
-          />
+          
+            <ReaderForm
+              reader={currentReader}
+              isEditing={!!currentReader}
+              onSave={handleSaveReader}
+              onClose={handleClosePopup}
+              isSaving={isSaving}
+            />
+        
         </div>
       )}
     </div>

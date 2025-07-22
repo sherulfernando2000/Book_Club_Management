@@ -46,9 +46,9 @@ export const getAllBooks = async (req: Request, res: Response, next: NextFunctio
 };
 
 // @desc Get book by Mongo _id
-export const getBookById = async (req: Request, res: Response, next: NextFunction) => {
+export const getBookByIsbn = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const book = await BookModel.findById(req.params.id);
+    const book = await BookModel.findOne({ isbn: req.params.isbn });
     if (!book) return next(new APIError(404, 'Book not found'));
     res.status(200).json(book);
   } catch (err: any) {
@@ -59,12 +59,11 @@ export const getBookById = async (req: Request, res: Response, next: NextFunctio
 // @desc Update book by _id
 export const updateBook = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const updatedBook = await BookModel.findByIdAndUpdate(
-      req.params.id,
+    const updatedBook = await BookModel.findOneAndUpdate(
+      { isbn: req.params.isbn },
       req.body,
       { new: true, runValidators: true }
     );
-
     if (!updatedBook) return next(new APIError(404, 'Book not found'));
     res.status(200).json(updatedBook);
   } catch (err: any) {
@@ -80,7 +79,7 @@ export const updateBook = async (req: Request, res: Response, next: NextFunction
 // @desc Delete book by _id
 export const deleteBook = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const deletedBook = await BookModel.findByIdAndDelete(req.params.id);
+    const deletedBook = await BookModel.findOneAndDelete({ isbn: req.params.isbn });
     if (!deletedBook) return next(new APIError(404, 'Book not found'));
 
     res.status(200).json({ message: 'Book deleted successfully' });

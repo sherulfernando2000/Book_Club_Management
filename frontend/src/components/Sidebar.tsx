@@ -30,12 +30,12 @@ const Sidebar: React.FC = () => {
       icon: <MdPeople className='w-5 h-5' />,
     },
     {
-      id: "Books",
+      id: "books",
       label: "Books",
       icon: <MdInventory className='w-5 h-5' />,
     },
     {
-      id: "Lendings",
+      id: "lendings",
       label: "Ledings",
       icon: <MdShoppingCart className='w-5 h-5' />,
     },
@@ -44,7 +44,8 @@ const Sidebar: React.FC = () => {
   return (
     <div className='bg-gray-900 text-white w-64 min-h-screen p-4'>
       <div className='mb-8'>
-        <h1 className='text-2xl font-bold text-center py-4'>Admin Panel</h1>
+        {/* Admin Panel */}
+        <h1 className='text-2xl font-bold text-center py-4'></h1>  
       </div>
 
       <nav>

@@ -5,6 +5,7 @@ import SignupPage from "./pages/SignupPage";
 import AdminRoutes from "./pages/AdminRoutes";
 import Dashboard from "./pages/Dashboard";
 import Readerpage from "./pages/Readerpage";
+import BooksPage from "./pages/BookPage";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
           children: [
             { path: "/dashboard", element: <Dashboard /> },
             { path: "/dashboard/readers", element: <Readerpage /> },
+            { path: "/dashboard/books", element: <BooksPage /> },
            
           ],
         },
