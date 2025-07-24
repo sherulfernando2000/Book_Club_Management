@@ -7,71 +7,101 @@ import { BookModel } from '../models/Book';
 
 //lend book
 export const lendBook = async (req: Request, res: Response, next: NextFunction) => {
+  const session = await mongoose.startSession();
+
   try {
+    session.startTransaction();
+
     const { book, reader } = req.body;
 
-    // Find the book by ID
-    const foundBook = await BookModel.findById(book);
+    // 1. Find book by ISBN
+    const foundBook = await BookModel.findOne({ isbn: book }).session(session);
     if (!foundBook) {
+      await session.abortTransaction();
       return next(new APIError(404, "Book not found"));
     }
 
-    // Check available copies
+    // 2. Check copies
     if (foundBook.copies <= 0) {
+      await session.abortTransaction();
       return next(new APIError(400, "No available copies to lend"));
     }
 
-    // Decrease available copies
+    // 3. Reduce copies
     foundBook.copies -= 1;
-    await foundBook.save();
+    await foundBook.save({ session });
 
-    // Lend for 14 days
+    // 4. Create lending entry
     const lentDate = new Date();
     const dueDate = new Date(lentDate);
     dueDate.setDate(dueDate.getDate() + 14);
 
-    const lending = new LendingModel({ book, reader, lentDate, dueDate });
-    const savedLending = await lending.save();
+    const lending = new LendingModel({
+      book: foundBook._id ,   //: foundBook._id
+      reader,
+      lentDate,
+      dueDate,
+    });
 
+    const savedLending = await lending.save({ session });
+
+    // 5. Commit transaction
+    await session.commitTransaction();
     res.status(201).json(savedLending);
   } catch (err: any) {
-    if (err instanceof mongoose.Error.ValidationError) {
-      const errors = Object.values(err.errors).map((e) => e.message);
-      return next(new APIError(400, "Validation failed", errors));
-    }
-
+    await session.abortTransaction();
     next(new APIError(500, "Error lending book", err.message));
+  } finally {
+    session.endSession();
   }
 };
 
+
 //return book
 export const returnBook = async (req: Request, res: Response, next: NextFunction) => {
+  const session = await mongoose.startSession();
+
   try {
+    session.startTransaction();
+
     const { id } = req.params;
 
-    const lending = await LendingModel.findById(id);
+    // 1. Find the lending record
+    const lending = await LendingModel.findById(id).session(session);
     if (!lending) {
+      await session.abortTransaction();
       return next(new APIError(404, "Lending record not found"));
     }
 
+    // 2. Check if already returned
     if (lending.returned) {
+      await session.abortTransaction();
       return next(new APIError(400, "Book has already been returned"));
     }
 
-    // Mark lending as returned
+    // 3. Mark as returned
     lending.returned = true;
-    await lending.save();
+    await lending.save({ session });
 
-    //  Increase availableCopies in Book
-    const book = await BookModel.findById(lending.book);
-    if (book) {
-      book.copies += 1;
-      await book.save();
+    // 4. Increment book's available copies
+    const book = await BookModel.findById(lending.book).session(session);
+    if (!book) {
+      await session.abortTransaction();
+      return next(new APIError(404, "Associated book not found"));
     }
+
+    book.copies += 1;
+    await book.save({ session });
+
+    // 5. Commit transaction
+    await session.commitTransaction();
 
     res.status(200).json({ message: "Book returned successfully", lending });
   } catch (err: any) {
+    await session.abortTransaction();
     next(new APIError(500, "Error returning book", err.message));
+  } finally {
+    session.endSession();
   }
 };
 
