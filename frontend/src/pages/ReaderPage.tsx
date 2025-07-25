@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Search, User } from "lucide-react";
 import type { Reader } from "../types/Reader";
 import ReaderTable from "../components/tables/ReaderTable";
@@ -12,6 +12,7 @@ import {
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useAuth } from "../context/useAuth";
+import { showConfirmation } from "../components/ConfirmationToast";
 
 const ReadersPage = () => {
   // States for readers list and search
@@ -86,26 +87,29 @@ const ReadersPage = () => {
   };
 
   const handleDeleteReader = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete this reader?")) {
-      try {
-        await deleteReader(id);
-        fetchAllReaders();
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          toast.error(error.message);
-        } else {
-          toast.error("Something went wrong");
-        }
-      } finally {
-        //
-      }
+    const confirmed = await showConfirmation({
+    message: "Are you sure you want to delete this reader?",
+    confirmText: "Delete Reader",
+    cancelText: "Cancel"
+  });
 
-      //setReaders(readers.filter((reader) => reader.readerId !== id));
+  if (!confirmed) return;
+
+  try {
+    await deleteReader(id);
+    await fetchAllReaders();
+    toast.success("Reader deleted successfully!");
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      toast.error(error.response?.data?.message || error.message);
+    } else {
+      toast.error("Failed to delete reader");
     }
+  }
   };
 
   const handleSaveReader = (
-    readerData: Omit<Reader, "readerId" | "createdAt" | "updatedAt">
+    readerData: Omit<Reader, "_id" | "readerId" | "createdAt" | "updatedAt">
   ) => {
     setIsSaving(true);
 

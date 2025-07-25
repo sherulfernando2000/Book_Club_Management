@@ -4,7 +4,7 @@ import type { Reader } from "../../types/Reader";
 interface ReaderFormProps {
   reader?: Reader | null;
   isEditing: boolean;
-  onSave: (reader: Omit<Reader, "readerId" | "createdAt" | "updatedAt">) => void;
+  onSave: (reader: Omit<Reader, "_id" | "readerId" | "createdAt" | "updatedAt">) => void;
   onClose: () => void;
   isSaving: boolean;
 }

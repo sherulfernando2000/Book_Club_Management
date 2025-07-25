@@ -12,12 +12,12 @@ export const deleteReader = async (id: string): Promise<void>  => {
     return response.data
 }
 
-export const addReader = async (readerData: Omit<Reader, "readerId" | "createdAt" | "updatedAt">) => {
+export const addReader = async (readerData: Omit<Reader, "_id"| "readerId" | "createdAt" | "updatedAt">) => {
     const response = await apiClient.post("/reader", readerData)
     return response.data
 }
 
-export const updateReader = async (readerId: string, readerData:Omit<Reader, "readerId" | "createdAt" | "updatedAt"> ) => {
+export const updateReader = async (readerId: string, readerData:Omit<Reader,"_id"| "readerId" | "createdAt" | "updatedAt"> ) => {
     const response = await apiClient.put(`/reader/${readerId}`, readerData)
     return response.data
 }

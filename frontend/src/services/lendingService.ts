@@ -9,7 +9,7 @@ export const getActiveLendings = async (): Promise<Lending[]> => {
 
 // Get lending history for a specific book
 export const getLendingHistoryByBook = async (bookId: string): Promise<Lending[]> => {
-  const response = await apiClient.get(`/lending/book/${bookId}`);
+  const response = await apiClient.get(`/lendings/book/${bookId}`);
   return response.data;
 };
 
@@ -24,7 +24,7 @@ export const lendBook = async (
   bookId: string,
   readerId: string
 ): Promise<Lending> => {
-  const response = await apiClient.post("/lending", {
+  const response = await apiClient.post("/lendings", {
     book: bookId,
     reader: readerId,
   });
@@ -33,6 +33,6 @@ export const lendBook = async (
 
 // Return a book by lending ID
 export const returnBook = async (lendingId: string): Promise<Lending> => {
-  const response = await apiClient.put(`/lending/return/${lendingId}`);
+  const response = await apiClient.put(`/lendings/return/${lendingId}`);
   return response.data;
 };

@@ -1,4 +1,5 @@
 export type Reader =  {
+    _id: string,
     readerId: string;
     name: string;
     email: string;
