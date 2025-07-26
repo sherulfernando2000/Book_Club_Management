@@ -105,8 +105,10 @@ const BookForm: React.FC<BookFormProps> = ({
         <h2 className="text-2xl font-bold text-center w-full">
           {isEditing ? "EDIT BOOK" : "ADD BOOK"}
         </h2>
-        <button onClick={onClose} className="hover:bg-red-400 rounded-full p-1">
-          ❌
+        <button onClick={onClose} className="hover:bg-red-600 rounded-full p-1">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black">
+            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </svg>
         </button>
       </div>
 
@@ -119,7 +121,7 @@ const BookForm: React.FC<BookFormProps> = ({
             <input
               type="text"
               name="title"
-              className="bg-blue-200 border p-2 rounded-full w-full"
+              className="bg-blue-100 border p-2 rounded-lg w-full"
               value={formData.title}
               onChange={handleChange}
             />
@@ -132,7 +134,7 @@ const BookForm: React.FC<BookFormProps> = ({
             <input
               type="text"
               name="author"
-              className="bg-blue-200 border p-2 rounded-full w-full"
+              className="bg-blue-100 border p-2 rounded-lg w-full"
               value={formData.author}
               onChange={handleChange}
             />
@@ -145,7 +147,7 @@ const BookForm: React.FC<BookFormProps> = ({
             <input
               type="text"
               name="isbn"
-              className="bg-blue-200 border p-2 rounded-full w-full"
+              className="bg-blue-100 border p-2 rounded-lg w-full"
               value={formData.isbn}
               onChange={handleChange}
             />
@@ -158,7 +160,7 @@ const BookForm: React.FC<BookFormProps> = ({
             <input
               type="number"
               name="copies"
-              className="bg-blue-200 border p-2 rounded-full w-full"
+              className="bg-blue-100 border p-2 rounded-lg w-full"
               value={formData.copies}
               min={0}
               onChange={handleChange}
@@ -172,7 +174,7 @@ const BookForm: React.FC<BookFormProps> = ({
             <input
               type="number"
               name="available"
-              className="bg-blue-200 border p-2 rounded-full w-full"
+              className="bg-blue-100 border p-2 rounded-lg w-full"
               value={formData.available}
               min={0}
               max={formData.copies}
@@ -189,7 +191,7 @@ const BookForm: React.FC<BookFormProps> = ({
             <input
               type="text"
               name="genre"
-              className="bg-blue-200 border p-2 rounded-full w-full"
+              className="bg-blue-100 border p-2 rounded-lg w-full"
               value={formData.genre}
               onChange={handleChange}
             />
@@ -202,7 +204,7 @@ const BookForm: React.FC<BookFormProps> = ({
             <input
               type="number"
               name="publishedYear"
-              className="bg-blue-200 border p-2 rounded-full w-full"
+              className="bg-blue-100 border p-2 rounded-lg w-full"
               value={formData.publishedYear}
               onChange={handleChange}
             />
@@ -215,7 +217,7 @@ const BookForm: React.FC<BookFormProps> = ({
         <div className="flex justify-end mt-6">
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full"
+            className="bg-blue-700 hover:bg-blue-600 hover:scale-105 text-white px-6 py-2 rounded-full"
             disabled={isSaving}
           >
             {isSaving ? "Saving..." : "Save"}

@@ -32,7 +32,7 @@ const Loginpage = () => {
   const { login: authenticate } = useAuth();
 
   // Replace these with your actual image URLs
-  const backgroundImageUrl = "your-background-image-url";
+  const backgroundImageUrl = "library2.jpeg";
   // const logo = "your-logo-url";
 
   const togglePasswordVisibility = () => {
@@ -110,30 +110,31 @@ const Loginpage = () => {
     <div className="login-page">
       <div className="flex min-h-screen w-full">
         <div
-          className="hidden md:flex w-4/5 flex-col justify-center items-center bg-black p-8 text-center relative"
+          className="hidden md:flex w-1/2 flex-col justify-center items-center bg-black  text-center relative"
           style={{
             backgroundImage: `url(${backgroundImageUrl})`,
-            backgroundSize: "cover",
+            backgroundSize: "contain",
             backgroundPosition: "center",
           }}
         >
           <div className="relative z-10 flex-col justify-center items-center text-blue-500">
-            <h1 className="text-2xl md:text-3xl font-semibold text">
+            <h1 className="text-2xl md:text-4xl font-semibold text">
               Welcome to
             </h1>
-            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">
+            <h2 className="text-3xl md:text-5xl font-bold mt-2 mb-4">
               BOOK CLUB LIBRARY
             </h2>
             <p className="text-sm md:text-base">Books Bring Us Together</p>
           </div>
         </div>
 
-        <div className="w-full flex flex-col items-center justify-center">
+        <div className="w-full min-h-screen md:w-1/2 flex flex-col items-center justify-center">
           <form
             onSubmit={handleSubmit}
             className="md:w-96 w-80 flex flex-col items-center justify-center"
           >
-            <h1 className="text-2xl md:text-2xl font-bold text-black">
+            <img src="booklogo.jpeg" alt="" className='w-15 h-15' />
+            <h1 className="text-2xl md:text-2xl font-bold text-blue-800">
               SIGN IN
             </h1>
 
@@ -141,7 +142,7 @@ const Loginpage = () => {
               Welcome back! Please sign in to continue
             </p>
 
-            <div className="w-full">
+            <div className="w-full p-2">
               <div
                 className={`flex items-center w-full bg-transparent border h-12 rounded-full overflow-hidden pl-6 gap-2 transition-colors duration-300 focus-within:border-black/60 ${
                   errors.email && submitted
@@ -183,7 +184,7 @@ const Loginpage = () => {
               )}
             </div>
 
-            <div className="w-full">
+            <div className="w-full p-2">
               <div
                 className={`flex items-center mt-6 w-full bg-transparent border h-12 rounded-full overflow-hidden pl-6 gap-2 transition-colors duration-300 focus-within:border-black/60 ${
                   errors.password && submitted
@@ -267,7 +268,7 @@ const Loginpage = () => {
               )}
             </div>
 
-            <div className="w-full flex items-center justify-between mt-8 text-gray-500/80">
+            <div className="w-full p-2 flex items-center justify-between mt-8 text-gray-500/80">
               <div className="flex items-center gap-2">
                 <input className="h-5" type="checkbox" id="checkbox" />
                 <label className="text-sm" htmlFor="checkbox">
@@ -286,7 +287,7 @@ const Loginpage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-8 w-full h-11 rounded-full text-white bg-black hover:opacity-90 transition-opacity disabled:opacity-70"
+              className="mt-8 w-5/6  h-11 rounded-full text-white bg-black hover:opacity-90 hover:scale-95 transition-opacity disabled:opacity-70"
             >
               {isLoading ? "Signing in..." : "Login"}
             </button>

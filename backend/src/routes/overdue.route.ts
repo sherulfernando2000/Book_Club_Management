@@ -4,6 +4,6 @@ import { getOverdueReaders } from "../controllers/overdue.controller";
 
 const overdueRouter = Router();
 
-overdueRouter.get("/overdue", getOverdueReaders);
+overdueRouter.get("/", getOverdueReaders);
 
 export default overdueRouter;

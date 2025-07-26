@@ -149,12 +149,13 @@ const SignupPage = () => {
           </div>
         </div>
 
-        <div className="w-full flex flex-col items-center justify-center">
+        <div className="w-full min-h-90 flex flex-col items-center justify-center">
           <form
             onSubmit={handleSubmit}
             className="md:w-96 w-80 flex flex-col items-center justify-center"
           >
-            <h1 className="text-2xl md:text-2xl font-bold text-black">
+            <img src="booklogo.jpeg" alt="" className='w-15 h-15' />
+            <h1 className="text-2xl md:text-2xl font-bold text-blue-800">
               CREATE ACCOUNT
             </h1>
 

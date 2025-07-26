@@ -1,5 +1,5 @@
 import  { useEffect, useState } from "react";
-import { Search, User } from "lucide-react";
+import { Plus, Search, User } from "lucide-react";
 import type { Reader } from "../types/Reader";
 import ReaderTable from "../components/tables/ReaderTable";
 import ReaderForm from "../components/forms/ReaderForm";
@@ -156,19 +156,24 @@ const ReadersPage = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center flex items-center justify-center gap-2 text-black">
+      <h1 className="text-3xl font-bold mb-4 text-center flex items-center justify-center gap-2 text-black text-shadow-lg">
         <User className="w-6 h-6" />
-        All Readers
+        READERS
       </h1>
 
       {/* Search bar and button to Add reader */}
       <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-end mb-4 gap-4">
         {/* Search Input */}
         <div className="flex-1">
-          <label htmlFor="search" className="text-black font-medium mb-1">
-            Search
-          </label>
+          <div className="flex">
+              <Search/>
+              <label htmlFor="search" className="text-black font-medium mb-1">
+                Search
+              </label>
+          </div>
+          
           <div className="relative">
+            
             <input
               id="search"
               type="text"
@@ -183,17 +188,18 @@ const ReadersPage = () => {
         {/* Add Button */}
         <button
           onClick={handleAddReader}
-          className="bg-green-500 text-white px-4 py-2 rounded w-full sm:w-auto"
+          className="flex bg-blue-600 hover:bg-blue-500 hover:scale-105 text-white px-4 py-2 rounded w-full sm:w-auto"
         >
-          Add Reader
+          <Plus/>
+          Add 
         </button>
       </div>
 
       <div className="border-b-2 black"></div>
 
       {/* Readers Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full text-sm text-left">
+      <div className="h-[calc(100vh-260px)] overflow-y-auto rounded shadow border bg-white">
+        <table className="min-w-full text-sm text-left ">
           <ReaderTable
             readers={readers}
             search={search}
@@ -222,3 +228,28 @@ const ReadersPage = () => {
 };
 
 export default ReadersPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

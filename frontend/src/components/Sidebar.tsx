@@ -1,5 +1,6 @@
+import { BookOpenCheck } from "lucide-react"
 import React, { useState, type JSX } from "react"
-import { MdDashboard, MdPeople, MdInventory, MdShoppingCart } from "react-icons/md"
+import { MdDashboard, MdPeople, MdInventory, MdLockClock } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 
 interface SidebarItem {
@@ -37,12 +38,17 @@ const Sidebar: React.FC = () => {
     {
       id: "lendings",
       label: "Ledings",
-      icon: <MdShoppingCart className='w-5 h-5' />,
+      icon: <BookOpenCheck className="w-6 h-6 text-white" />,
+    },
+    {
+      id: "overdues",
+      label: "Overdues",
+      icon: <MdLockClock className='w-5 h-5' />,
     },
   ]
 
   return (
-    <div className='bg-gray-900 text-white w-64 min-h-screen p-4'>
+    <div className='bg-black text-white w-64 min-h-screen p-4'>
       <div className='mb-8'>
         {/* Admin Panel */}
         <h1 className='text-2xl font-bold text-center py-4'></h1>  
@@ -56,7 +62,7 @@ const Sidebar: React.FC = () => {
                 onClick={() => handleItemClick(item.id)}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 text-left ${
                   activeItem === item.id
-                    ? "bg-indigo-600 text-white"
+                    ? "bg-blue-600 text-white"
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
                 }`}
               >

@@ -37,7 +37,7 @@ const ReaderTable: React.FC<ReaderTableProps> = ({ readers, search, onView, onDe
           .map((reader) => (
             <tr
               key={reader.readerId}
-              className="border-t hover:bg-gray-100 transition-all"
+              className="border-t hover:bg-blue-300 hover:scale-105 transition-all "
             >
               <td className="px-4 py-2 text-center">{reader.readerId}</td>
               <td className="px-4 py-2 text-center">{reader.name}</td>
@@ -57,13 +57,13 @@ const ReaderTable: React.FC<ReaderTableProps> = ({ readers, search, onView, onDe
               <td className="px-4 py-2 text-center">
                 <div className="flex justify-center gap-2 flex-wrap">
                   <button
-                    className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
+                    className="bg-blue-600 hover:bg-blue-500 hover:scale-105 text-white px-3 py-1 rounded text-sm"
                     onClick={() => onView(reader.readerId)}
                   >
                     View
                   </button>
                   <button
-                    className="bg-red-500 text-white px-3 py-1 rounded text-sm"
+                    className="bg-red-600 hover:bg-red-500 hover:scale-105 text-white px-3 py-1 rounded text-sm"
                     onClick={() => onDelete(reader.readerId)}
                   >
                     Delete

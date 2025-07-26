@@ -73,7 +73,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
             {isEditing ? "EDIT READER" : "ADD READER"}
           </h2>
         </div>
-        <button onClick={onClose} className="hover:bg-red-400 rounded-full p-1">
+        <button onClick={onClose} className="hover:bg-red-500 rounded-full p-1">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black">
             <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
           </svg>
@@ -87,7 +87,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
               <label className="block text-black mb-1">Reader ID</label>
               <input
                 type="text"
-                className="bg-gray-200 border border-gray-300 p-2 rounded-full w-full"
+                className="bg-gray-200 border border-gray-300 p-2 rounded-lg w-full"
                 value={reader.readerId}
                 readOnly
               />
@@ -99,7 +99,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
             <label className="block text-black mb-1">Name</label>
             <input
               type="text"
-              className="bg-blue-200 border border-blue-300 p-2 rounded-full w-full"
+              className="bg-blue-100 border border-blue-300 p-2 rounded-lg w-full"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -111,7 +111,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
             <label className="block text-black mb-1">Email</label>
             <input
               type="email"
-              className="bg-blue-200 border border-blue-300 p-2 rounded-full w-full"
+              className="bg-blue-100 border border-blue-300 p-2 rounded-lg w-full"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -120,10 +120,10 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
 
           {/* Phone */}
           <div>
-            <label className="block text-black mb-1">Phone</label>
+            <label className="block text-black mb-1 ">Phone</label>
             <input
               type="text"
-              className="bg-blue-200 border border-blue-300 p-2 rounded-full w-full"
+              className="bg-blue-100 border border-blue-300 p-2 rounded-lg w-full"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
@@ -135,7 +135,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
             <label className="block text-black mb-1">Address</label>
             <input
               type="text"
-              className="bg-blue-200 border border-blue-300 p-2 rounded-full w-full"
+              className="bg-blue-100 border border-blue-300 p-2 rounded-lg w-full"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
@@ -146,7 +146,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
           <div>
             <label className="block text-black mb-1">Status</label>
             <select
-              className="bg-blue-200 border border-blue-300 p-2 rounded-full w-full"
+              className="bg-blue-100 border border-blue-300 p-2 rounded-lg w-full"
               value={isActive ? "active" : "inactive"}
               onChange={(e) => setIsActive(e.target.value === "active")}
             >
@@ -159,7 +159,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
         <div className="flex justify-end mt-6">
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full transition"
+            className="bg-blue-700 hover:bg-blue-600 text-white px-6 py-2 rounded-full transition"
             disabled={isSaving}
           >
             {isSaving ? "Saving..." : "Save"}

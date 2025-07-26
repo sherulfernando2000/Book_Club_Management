@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 
@@ -7,7 +7,7 @@ const AdminRoutes = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className='flex h-screen overflow-hidden'>
+    <div className='flex h-screen overscroll-auto'>
       <button
       className="md:hidden p-2 fixed top-20 left-4 z-50 bg-white shadow rounded"
       onClick={() => setSidebarOpen(!isSidebarOpen)}
@@ -30,7 +30,7 @@ const AdminRoutes = () => {
       <div className="hidden md:block flex-shrink-0">
         <Sidebar/>
       </div>
-      <div className='flex-1 overflow-y-auto bg-gray-50'>
+      <div className='flex-1  bg-gray-50 p-5'>
         <Outlet/>
       </div>
     </div>

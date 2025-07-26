@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { logout } from '../services/authService'
+import toast from 'react-hot-toast'
+import { useAuth } from '../context/useAuth'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const navigate = useNavigate()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isLoading, setIsLoading] = useState(false)
-    const [isLoggedIn, setIsLoggedIn] = useState(true)
+    // const [isLoggedIn, setIsLoggedIn] = useState(true)
+
+    const {isLoggedIn, logout: unauthenticate} = useAuth();
 
     const handleLogin = () => {
         console.log("Login")
@@ -13,7 +19,10 @@ const Navbar = () => {
       }
 
       const handleLogout = async () => {
-        navigate("/logout")
+        await logout()
+        toast.success("Logout successful!")
+        unauthenticate()
+        navigate("/login")
       }  
 
       const handleDashboard = () => {
@@ -30,11 +39,12 @@ const Navbar = () => {
 
   return (
     <nav className='bg-white shadow-lg border-b border-gray-200'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+      <div className='w-full mx-auto px-4 sm:px-8 lg:px-10'>
         <div className='flex justify-between items-center h-16'>
           {/* Logo Section */}
           <div className='flex items-center'>
-            <div className='flex-shrink-0'>
+            <div className='flex flex-shrink-0 gap-2 justify-center items-center'>
+              <img src="/booklogo.jpeg" alt="Logo" className='w-15 h-15' />
               <h1 className='text-3xl font-bold text-blue-700'>BOOK CLUB</h1>
             </div>
           </div>

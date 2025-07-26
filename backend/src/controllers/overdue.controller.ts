@@ -6,6 +6,7 @@ import { Reader } from "../models/Reader";
 export const getOverdueReaders = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const today = new Date();
+    console.log(`today ${today}`)
 
     const overdueLendings = await LendingModel.find({
       dueDate: { $lt: today },
@@ -13,6 +14,8 @@ export const getOverdueReaders = async (req: Request, res: Response, next: NextF
     })
       .populate("book")  // Replace book ID with full book document
       .populate("reader");
+    
+    console.log(`hi ${overdueLendings}`)
 
     if (overdueLendings.length === 0) {
       return res.status(200).json({ message: "No overdue books found." });

@@ -12,6 +12,7 @@ import type { Lending } from "../types/Lending";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { showConfirmation  } from "../components/ConfirmationToast";
+import { BookOpenCheck } from "lucide-react";
 
 const LendingPage: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
@@ -148,8 +149,12 @@ const LendingPage: React.FC = () => {
   };
 
   return (
-    <div className="p-8 max-width mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Lend a Book</h1>
+    <div className="h-full overflow-y-auto px-4 py-6">
+      <div className="flex gap-2 items-center justify-center">
+           <BookOpenCheck className="w-6 h-6 text-black" />
+           <h1 className="text-2xl font-bold ">LEND A BOOK</h1>
+      </div>
+      
 
       <div className="space-y-6">
         {/* Reader Details Section */}
