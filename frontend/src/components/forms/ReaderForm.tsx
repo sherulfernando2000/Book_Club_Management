@@ -100,6 +100,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
             <input
               type="text"
               className="bg-blue-100 border border-blue-300 p-2 rounded-lg w-full"
+              placeholder="Ex: sherul dhanushka"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -112,6 +113,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
             <input
               type="email"
               className="bg-blue-100 border border-blue-300 p-2 rounded-lg w-full"
+              placeholder="Ex: sherul@exmaple.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -124,6 +126,7 @@ const ReaderForm: React.FC<ReaderFormProps> = ({
             <input
               type="text"
               className="bg-blue-100 border border-blue-300 p-2 rounded-lg w-full"
+              placeholder="Ex: 07xxxxxxxx"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />

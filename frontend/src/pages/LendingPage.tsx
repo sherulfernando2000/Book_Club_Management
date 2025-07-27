@@ -12,7 +12,8 @@ import type { Lending } from "../types/Lending";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { showConfirmation  } from "../components/ConfirmationToast";
-import { BookOpenCheck } from "lucide-react";
+import { BookOpenCheck, Search } from "lucide-react";
+import LendingTable from "../components/tables/LendingTable"
 
 const LendingPage: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
@@ -33,6 +34,9 @@ const LendingPage: React.FC = () => {
     title: "",
     copies: 0,
   });
+
+  const [showLendForm, setShowLendForm] = useState(false)
+  const [search, setSearch] = useState("")
 
   // const fetchData = async () => {
   //   // const [booksData, readersData, lendingsData] = await Promise.all([
@@ -148,6 +152,8 @@ const LendingPage: React.FC = () => {
   }
   };
 
+  
+
   return (
     <div className="h-full overflow-y-auto px-4 py-6">
       <div className="flex gap-2 items-center justify-center">
@@ -156,7 +162,31 @@ const LendingPage: React.FC = () => {
       </div>
       
 
-      <div className="space-y-6">
+      {/* search bar */}
+       <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-end mb-4 gap-4">
+        <div className="flex-1">
+          <label htmlFor="search" className="text-black font-medium mb-1">
+            Search
+          </label>
+          <div className="relative">
+            <input
+              id="search"
+              type="text"
+              placeholder="Search Lending..."
+              className="border border-neutral-300 p-2 pr-10 rounded w-full hover:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-400 transition"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          </div>
+        </div>
+
+      {/* add lend book container */}
+      <button className="bg-blue-600 text-white px-3 py-2 rounded" onClick={()=> setShowLendForm(!showLendForm)}>{showLendForm? "Add lenging":"Add lending"}</button>
+        
+      </div>
+
+      {showLendForm && <div id="lendToggle" >
+        <div className="space-y-6">
         {/* Reader Details Section */}
         <div>
           <h2 className="text-lg font-bold mb-4">Reader Details</h2>
@@ -314,51 +344,17 @@ const LendingPage: React.FC = () => {
       >
         {loading ? "Processing..." : "Lend Book"}
       </button>
+      </div>
+      }
 
       <h2 className="text-xl font-semibold mt-10 mb-4">Active Lendings</h2>
       <div className="overflow-x-auto">
-        <table className="w-full border">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-2 border">Reader</th>
-              <th className="p-2 border">Book</th>
-              <th className="p-2 border">Lent Date</th>
-              <th className="p-2 border">Due Date</th>
-              <th className="p-2 border">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {activeLendings.length === 0 && (
-              <tr>
-                <td colSpan={5} className="text-center py-4">
-                  No active lendings
-                </td>
-              </tr>
-            )}
-            {activeLendings.map((lending) => (
-              <tr key={lending._id}>
-                <td className="p-2 border">
-                  {(lending.reader as Reader).name}
-                </td>
-                <td className="p-2 border">{(lending.book as Book).title}</td>
-                <td className="p-2 border">
-                  {new Date(lending.lentDate).toLocaleDateString()}
-                </td>
-                <td className="p-2 border">
-                  {new Date(lending.dueDate).toLocaleDateString()}
-                </td>
-                <td className="p-2 border">
-                  <button
-                    onClick={() => handleReturn(lending._id!)}
-                    className="bg-green-600 text-white px-3 py-1 rounded"
-                  >
-                    Return
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <LendingTable
+          activeLendings={activeLendings}
+          search={search}
+          onReturn={handleReturn}
+        />
+        
       </div>
     </div>
   );

@@ -128,6 +128,7 @@ const ReadersPage = () => {
                 : reader
             )
           );
+          toast.success("Reader updated successfully")
         } catch (error) {
           if (axios.isAxiosError(error)) {
             toast.error(error.message);
@@ -140,6 +141,7 @@ const ReadersPage = () => {
         try {
           const newReader = await addReader(readerData);
           setReaders((prev) => [...prev, newReader]);
+          toast.success("Reader saved successfully")
         } catch (error) {
           if (axios.isAxiosError(error)) {
             toast.error(error.message);
