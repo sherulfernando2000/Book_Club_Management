@@ -1,38 +1,62 @@
-Book Club Management System
-A modern, full-stack web application for managing book clubs built with the MERN stack with comprehensive library management features.
+# Book Club Management System
 
-🚀 Features
-👥 User Management
-Admin Registration & Authentication , Member Management 
+A modern, full-stack web application for managing book clubs built with the **MERN stack** with comprehensive library management features.
 
+---
 
-📚 Book Management
-Book Tracking (Add, review, and manage book collectionsDigital)
+## 🚀 Features
 
-🔄 Lending System
-Book Lending - Complete checkout and return system
+### 👥 User Management
+- Admin registration & authentication  
+- Member management  
 
-⚡ Overdue Management
-Overdue Tracking - Real-time monitoring of overdue book
+### 📚 Book Management
+- Add, review, and manage book collections  
 
-📧 Notifications
-Email Notifications - Automated email alerts for due dates, overdue books, and events
+### 🔄 Lending System
+- Complete book checkout and return system  
 
-🛠️ Technology Stack
-Frontend
-React
-Tailwind CSS
+### ⚡ Overdue Management
+- Real-time monitoring of overdue books  
 
-Backend
-Node.js 
-Express.js
+### 📧 Notifications
+- Automated email alerts for due dates, overdue books, and events  
 
-Database & Services
-MongoDB
-Node Mailer 
+---
 
-📦 Installation
-Prerequisites
-Node.js (v14 or higher)
-MongoDB
-npm or yarn
+## 🛠️ Technology Stack
+
+**Frontend**  
+- React  
+- Tailwind CSS  
+
+**Backend**  
+- Node.js  
+- Express.js  
+
+---
+
+## 📦 Installation & Running the Application
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/book-club-management.git
+
+# Navigate to the project directory
+cd book-club-management
+
+# Install backend dependencies
+cd backend
+npm install
+
+# Install frontend dependencies
+cd ../frontend
+npm install
+
+# Run backend server
+cd ../backend
+npm start
+
+# Run frontend server
+cd ../frontend
+npm start
