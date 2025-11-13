@@ -122,6 +122,7 @@ const BookForm: React.FC<BookFormProps> = ({
               type="text"
               name="title"
               className="bg-blue-100 border p-2 rounded-lg w-full"
+              placeholder="Ex:Harry Potter"
               value={formData.title}
               onChange={handleChange}
             />
@@ -135,6 +136,7 @@ const BookForm: React.FC<BookFormProps> = ({
               type="text"
               name="author"
               className="bg-blue-100 border p-2 rounded-lg w-full"
+              placeholder="J.K.Rowling"
               value={formData.author}
               onChange={handleChange}
             />
@@ -148,6 +150,7 @@ const BookForm: React.FC<BookFormProps> = ({
               type="text"
               name="isbn"
               className="bg-blue-100 border p-2 rounded-lg w-full"
+              placeholder="Ex:9558875023"
               value={formData.isbn}
               onChange={handleChange}
             />
@@ -161,6 +164,7 @@ const BookForm: React.FC<BookFormProps> = ({
               type="number"
               name="copies"
               className="bg-blue-100 border p-2 rounded-lg w-full"
+              placeholder="Ex:10"
               value={formData.copies}
               min={0}
               onChange={handleChange}
@@ -192,6 +196,7 @@ const BookForm: React.FC<BookFormProps> = ({
               type="text"
               name="genre"
               className="bg-blue-100 border p-2 rounded-lg w-full"
+              placeholder="Ex:children fantasy book"
               value={formData.genre}
               onChange={handleChange}
             />

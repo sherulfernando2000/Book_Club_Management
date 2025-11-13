@@ -6,46 +6,100 @@ import { APIError } from "../errors/APIError";
 import { BookModel } from '../models/Book';
 
 //lend book
+// export const lendBook = async (req: Request, res: Response, next: NextFunction) => {
+//   const session = await mongoose.startSession();
+
+//   try {
+//     session.startTransaction();
+
+//     const { book, reader } = req.body;
+
+//     // 1. Find book by ISBN
+//     const foundBook = await BookModel.findOne({ isbn: book }).session(session);
+//     if (!foundBook) {
+//       await session.abortTransaction();
+//       return next(new APIError(404, "Book not found"));
+//     }
+
+//     // 2. Check copies
+//     if (foundBook.copies <= 0) {
+//       await session.abortTransaction();
+//       return next(new APIError(400, "No available copies to lend"));
+//     }
+
+//     // 3. Reduce copies
+//     foundBook.copies -= 1;
+//     await foundBook.save({ session });
+
+//     // 4. Create lending entry
+//     const lentDate = new Date();
+//     const dueDate = new Date(lentDate);
+//     dueDate.setDate(dueDate.getDate() + 14);
+
+//     const lending = new LendingModel({
+//       book: foundBook._id ,   //: foundBook._id
+//       reader,
+//       lentDate,
+//       dueDate,
+//     });
+
+//     const savedLending = await lending.save({ session });
+
+//     // 5. Commit transaction
+//     await session.commitTransaction();
+//     res.status(201).json(savedLending);
+//   } catch (err: any) {
+//     await session.abortTransaction();
+//     next(new APIError(500, "Error lending book", err.message));
+//   } finally {
+//     session.endSession();
+//   }
+// };
+
 export const lendBook = async (req: Request, res: Response, next: NextFunction) => {
   const session = await mongoose.startSession();
 
   try {
     session.startTransaction();
 
-    const { book, reader } = req.body;
+    const { book, reader, dueDate } = req.body; // dueDate is optional
 
-    // 1. Find book by ISBN
+    //Find book by ISBN
     const foundBook = await BookModel.findOne({ isbn: book }).session(session);
     if (!foundBook) {
       await session.abortTransaction();
       return next(new APIError(404, "Book not found"));
     }
 
-    // 2. Check copies
+    //Check copies
     if (foundBook.copies <= 0) {
       await session.abortTransaction();
       return next(new APIError(400, "No available copies to lend"));
     }
 
-    // 3. Reduce copies
+    //Decrease copies
     foundBook.copies -= 1;
     await foundBook.save({ session });
 
-    // 4. Create lending entry
+    //Create lending entry
     const lentDate = new Date();
-    const dueDate = new Date(lentDate);
-    dueDate.setDate(dueDate.getDate() + 14);
+
+    //dueDate handling, default - 14 days
+    const finalDueDate = dueDate ? new Date(dueDate) : new Date(lentDate);
+    if (!dueDate) {
+      finalDueDate.setDate(finalDueDate.getDate() + 14);
+    }
 
     const lending = new LendingModel({
-      book: foundBook._id ,   //: foundBook._id
+      book: foundBook._id,
       reader,
       lentDate,
-      dueDate,
+      dueDate: finalDueDate,
     });
 
     const savedLending = await lending.save({ session });
 
-    // 5. Commit transaction
+    //Commit transaction
     await session.commitTransaction();
     res.status(201).json(savedLending);
   } catch (err: any) {
@@ -55,6 +109,7 @@ export const lendBook = async (req: Request, res: Response, next: NextFunction) 
     session.endSession();
   }
 };
+
 
 
 //return book

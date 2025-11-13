@@ -8,6 +8,7 @@ import Readerpage from "./pages/Readerpage";
 import BooksPage from "./pages/BookPage";
 import LendingPage from "./pages/LendingPage";
 import OverduePage from "./pages/OverduePage";
+import UserProfile from "./pages/UserProfilePage";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
             { path: "/dashboard/books", element: <BooksPage /> },
             { path: "/dashboard/lendings", element: <LendingPage /> },
             { path: "/dashboard/overdues", element: <OverduePage /> },
+            { path: "/dashboard/profile", element: <UserProfile/> },
 
            
           ],

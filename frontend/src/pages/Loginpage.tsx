@@ -30,6 +30,7 @@ const Loginpage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { login: authenticate } = useAuth();
+  const [openForgotPasswordDialog, setOpenForgotPasswordDialog] = useState(false)
 
   // Replace these with your actual image URLs
   const backgroundImageUrl = "library2.jpeg";
@@ -39,10 +40,10 @@ const Loginpage = () => {
     setShowPassword(!showPassword);
   };
 
-  const openForgotPasswordDialog = () => {
-    // Implement forgot password dialog logic
-    console.log("Forgot password clicked");
-  };
+  // const openForgotPasswordDialog = () => {
+  //   // Implement forgot password dialog logic
+  //   console.log("Forgot password clicked");
+  // };
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -74,8 +75,9 @@ const Loginpage = () => {
       try {
          const user = await login(formData);
         toast.success(`Welcome, ${user.user.name}!`);
-        console.log(`Welcome, ${user.name}!`)
-        console.log(user.user.name)
+        // console.log(`Welcome, ${user.name}!`)
+        // console.log(`user ${user.user}`)
+        localStorage.setItem("user", JSON.stringify(user.user));
         authenticate(user.accessToken);
         navigate("/dashboard");
       } catch (error) {
@@ -108,7 +110,45 @@ const Loginpage = () => {
 
   return (
     <div className="login-page">
+      
+      {
+          openForgotPasswordDialog 
+          &&
+          <div
+            className="fixed inset-0 flex items-center justify-center bg-black/70 bg-opacity-40 z-50"
+            onClick={() => setOpenForgotPasswordDialog(false)} // Close on outside click
+          >
+            <div
+              className="bg-white text-gray-500 max-w-96 mx-4 md:p-6 p-4 text-left text-sm rounded shadow-[0px_0px_10px_0px] shadow-black/10"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+            >
+              <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Forget Password?</h2>
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                className="w-full border mt-1 border-gray-500/30 focus:border-indigo-500 outline-none rounded py-2.5 px-4"
+                type="email"
+                placeholder="Enter your email"
+              />
+              <button
+                type="button"
+                className="w-full my-3 bg-gray-800 active:scale-95 transition py-2.5 rounded text-white"
+              >
+                Send Email
+              </button>
+              <p className="text-gray-500/90 text-sm mt-4">
+                Don't have an account?
+                <Link to="/signup" className="text-indigo-400 hover:underline ml-1">
+                  Sign up
+                </Link>
+              </p>
+            </div>
+          </div>
+          
+        }
       <div className="flex min-h-screen w-full">
+
+        
         <div
           className="hidden md:flex w-1/2 flex-col justify-center items-center bg-black  text-center relative"
           style={{
@@ -278,7 +318,7 @@ const Loginpage = () => {
               <button
                 type="button"
                 className="text-sm underline cursor-pointer hover:text-indigo-500"
-                onClick={openForgotPasswordDialog}
+                onClick={()=>setOpenForgotPasswordDialog(!openForgotPasswordDialog)}
               >
                 Forgot password?
               </button>
@@ -335,6 +375,9 @@ const Loginpage = () => {
             </p>
           </form>
         </div>
+
+        
+         
       </div>
     </div>
   );

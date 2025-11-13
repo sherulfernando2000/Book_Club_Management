@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { BookModel } from '../models/Book';
 import { APIError } from '../errors/APIError';
 
-// @desc Create a new book
+// Create a new book
 export const createBook = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { title, author, genre, publishedYear, isbn, copies } = req.body;

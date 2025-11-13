@@ -33,8 +33,11 @@ const LendingPage: React.FC = () => {
     isbn: "",
     title: "",
     copies: 0,
+    
+
   });
 
+  const [dueDate,setDueDate] = useState("")
   const [showLendForm, setShowLendForm] = useState(false)
   const [search, setSearch] = useState("")
 
@@ -107,7 +110,7 @@ const LendingPage: React.FC = () => {
     if (!bookDetails || !readerDetails) return;
     setLoading(true);
     try {
-      await lendBook(bookDetails.isbn, readerDetails._id);
+      await lendBook(bookDetails.isbn, readerDetails._id, dueDate);
       // setSelectedBook("");
       setReaderDetails({
         _id: "",
@@ -121,6 +124,7 @@ const LendingPage: React.FC = () => {
         title: "",
         copies: 0,
       });
+      setDueDate(""); 
       await fetchActiveLendings();
       console.log("success");
     } catch (error) {
@@ -196,6 +200,7 @@ const LendingPage: React.FC = () => {
               <input
                 type="text"
                 className="w-full border px-3 py-2 rounded"
+                placeholder="Enter mobile no."
                 value={readerDetails.mobile}
                 onChange={(e) => {
                   const mobile = e.target.value;
@@ -222,6 +227,7 @@ const LendingPage: React.FC = () => {
               <input
                 type="text"
                 className="w-full border px-3 py-2 rounded"
+                placeholder="Enter Name"
                 value={readerDetails.name}
                 onChange={(e) => {
                   const name = e.target.value;
@@ -280,6 +286,7 @@ const LendingPage: React.FC = () => {
                 type="text"
                 className="w-full border px-3 py-2 rounded"
                 value={bookDetails.isbn}
+                placeholder="Enter ISBN"
                 onChange={(e) => {
                   const isbn = e.target.value;
                   setBookDetails({ ...bookDetails, isbn });
@@ -333,6 +340,17 @@ const LendingPage: React.FC = () => {
                 readOnly
               />
             </div>
+
+            <div>
+              <label className="block mb-1 font-medium">Due Date</label>
+              <input
+                type="date"
+                className="w-full border px-3 py-2 rounded"
+                value={dueDate}
+                readOnly = {false}
+                onChange={(e) => setDueDate( e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -348,7 +366,7 @@ const LendingPage: React.FC = () => {
       }
 
       <h2 className="text-xl font-semibold mt-10 mb-4">Active Lendings</h2>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mb-8">
         <LendingTable
           activeLendings={activeLendings}
           search={search}

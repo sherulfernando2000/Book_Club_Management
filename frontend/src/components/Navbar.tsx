@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { logout } from '../services/authService'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/useAuth'
+import UserDropdown from './UserDropdown'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -51,32 +52,34 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className='hidden md:flex items-center space-x-4'>
-            {!isLoggedIn && (
+            {/* {!isLoggedIn && (
               <button
                 onClick={handleLogin}
                 className='bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
               >
                 Login
               </button>
-            )}
+            )} */}
 
-            {isLoggedIn && (
+            {/* {isLoggedIn && (
               <button
                 onClick={handleLogout}
                 className='bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
               >
                 Logout
               </button>
-            )}
+            )} */}
 
-            {isLoggedIn && (
+            {/* {isLoggedIn && (
               <button
                 onClick={handleDashboard}
                 className='bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'
               >
                 Dashboard
               </button>
-            )}
+            )} */}
+
+            {isLoggedIn && <UserDropdown/>}
           </div>
 
           {/* Mobile menu button */}
@@ -123,6 +126,8 @@ const Navbar = () => {
                   Dashboard
                 </button>
               )}
+
+                
             </div>
           </div>
         )}

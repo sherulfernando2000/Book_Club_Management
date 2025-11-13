@@ -19,7 +19,7 @@ export const setHeader = (token: string | null) => {
     }
 }
 
-// Add a response interceptor for handling token refresh logic
+//response interceptor 
 apiClient.interceptors.response.use(
     (response) => response, // Pass through successful responses
     async (error) => {

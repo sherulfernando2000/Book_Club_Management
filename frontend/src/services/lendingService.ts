@@ -22,11 +22,13 @@ export const getLendingHistoryByReader = async (readerId: string): Promise<Lendi
 // Lend a book to a reader
 export const lendBook = async (
   bookId: string,
-  readerId: string
+  readerId: string,
+  dueDate: string
 ): Promise<Lending> => {
   const response = await apiClient.post("/lendings", {
     book: bookId,
     reader: readerId,
+    dueDate               //changed
   });
   return response.data;
 };
